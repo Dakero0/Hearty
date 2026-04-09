@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <audio id="wind-sound" loop>
+        <source src="windy.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="heartbeat-sound" loop>
+        <source src="heartbeat.wav" type="audio/wav">
+    </audio>
+    
+
+    <button id="bilqis-invert" class="tiny-btn">change</button>
 
     <div class="toggle-container">
         <span class="label">Pinky</span>
@@ -16,6 +26,12 @@
             <span class="slider round"></span>
         </label>
         <span class="label">Goth</span>
+
+        <span class="label" style="margin-left: 40px;">Bilqis</span>
+        <label class="switch">
+            <input type="checkbox" id="bilqis-toggle">
+            <span class="slider round bilqis-slider"></span>
+        </label>
     </div>
 
     <div class="heart-container" id="heart">
@@ -26,8 +42,8 @@
 
     <div id="death-screen">
         <div class="death-content">
-            <h1>died.......of flirty cause 😏💐</h1>
-            <button onclick="location.reload()">Go back</button>
+            <h1>died of.....flirty cause 😏💐</h1>
+            <button onclick="resetGame()">Go back</button>
         </div>
     </div>
 
