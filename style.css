@@ -4,14 +4,31 @@
     --glow-color: #ff99bb;       
     --text-color: #ff6699;
     --switch-bg: #ffb3c6;
+    --transition-speed: 0.8s;
 }
 
 body.goth {
-    --bg-color: #1a1a1a;         
+    --bg-color: #101010;         
     --heart-color: #8b0000;      
     --glow-color: #ff0000;       
     --text-color: #8b0000;
     --switch-bg: #444444;
+}
+
+body.bilqis {
+    --bg-color: #000000;         
+    --heart-color: #ffffff;      
+    --glow-color: #ffffff;       
+    --text-color: #ffffff;
+    --switch-bg: #555555;
+}
+
+body.bilqis.inverted {
+    --bg-color: #ffffff;         
+    --heart-color: #000000;      
+    --glow-color: #000000;       
+    --text-color: #000000;
+    --switch-bg: #cccccc;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,13 +42,12 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.8s ease;
+    transition: background-color var(--transition-speed) ease;
     overflow: hidden;
     user-select: none; 
 }
 
-/* Toggle & Heart remain consistent for the vibe */
-.toggle-container { position: absolute; top: 30px; display: flex; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 2px; }
+.toggle-container { position: absolute; top: 30px; display: flex; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 2px; z-index: 10;}
 .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg); transition: .4s; border-radius: 34px; }
@@ -40,24 +56,50 @@ input:checked + .slider:before { transform: translateX(26px); }
 
 .heart-container {
     filter: drop-shadow(0 0 25px var(--glow-color));
-    animation: heartbeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
     cursor: pointer;
     z-index: 1;
+    transition: filter 0.5s ease;
 }
 
-.heart { position: relative; width: 100px; height: 100px; background-color: var(--heart-color); transform: rotate(-45deg); }
-.heart::before, .heart::after { content: ""; position: absolute; width: 100px; height: 100px; background-color: var(--heart-color); border-radius: 50%; }
+.heart-container.beating {
+    animation-name: heartbeat;
+    animation-iteration-count: infinite;
+    /* CHANGED: Using a smoother bezier curve for a more organic 'thump' */
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.heart { 
+    position: relative; 
+    width: 100px; 
+    height: 100px; 
+    background-color: var(--heart-color); 
+    transform: rotate(-45deg); 
+    /* Smooth color transition without breaking animation */
+    transition: background-color var(--transition-speed) ease; 
+}
+
+.heart::before, .heart::after { 
+    content: ""; 
+    position: absolute; 
+    width: 100px; 
+    height: 100px; 
+    background-color: var(--heart-color); 
+    border-radius: 50%; 
+    transition: background-color var(--transition-speed) ease;
+}
 .heart::before { top: -50px; left: 0; }
 .heart::after { top: 0; left: 50px; }
 
+/* REFINED: A much smoother "Lub-Dub" keyframe set */
 @keyframes heartbeat {
-    0%, 100% { transform: scale(0.95); }
-    5% { transform: scale(1.1); }
-    39% { transform: scale(0.85); }
-    45% { transform: scale(1); }
+    0% { transform: scale(0.95); }
+    10% { transform: scale(1.1); } 
+    18% { transform: scale(0.95); }
+    28% { transform: scale(1.05); } 
+    40% { transform: scale(0.95); }
+    100% { transform: scale(0.95); } 
 }
 
-/* Messages with smoother fade */
 #secret-message {
     position: absolute;
     bottom: 20%;
@@ -66,10 +108,9 @@ input:checked + .slider:before { transform: translateX(26px); }
     text-align: center;
     text-shadow: 0 0 10px var(--glow-color);
     opacity: 0;
-    transition: opacity 0.5s ease; /* Slower fade for readability */
+    transition: opacity 0.5s ease;
 }
 
-/* Death Screen - Backed up and clear */
 #death-screen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -82,15 +123,9 @@ input:checked + .slider:before { transform: translateX(26px); }
 }
 
 .death-content {
-    transform: scale(0.8); /* This "backs it up" so it's not in your face */
+    transform: scale(0.8); 
     text-align: center;
     max-width: 80%;
-}
-
-#death-screen h1 {
-    font-size: 2.5rem; /* Slightly smaller to keep it aesthetic */
-    margin-bottom: 30px;
-    line-height: 1.4;
 }
 
 button {
@@ -100,9 +135,21 @@ button {
     padding: 12px 24px;
     font-family: inherit;
     cursor: pointer;
-    border-radius: 50px; /* Rounder, more aesthetic */
-    font-size: 1rem;
-    transition: transform 0.2s;
+    border-radius: 50px;
+    transition: transform 0.2s, background-color 0.5s;
 }
 
-button:hover { transform: scale(1.1); }
+.bilqis-slider { background-color: #888; }
+
+.tiny-btn {
+    position: absolute;
+    top: 15px; left: 15px;
+    font-size: 12px; padding: 4px 8px;
+    background: var(--text-color);
+    color: var(--bg-color);
+    border: none; border-radius: 5px;
+    cursor: pointer; display: none; z-index: 20;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body.bilqis:not(.inverted) button { color: black; }
