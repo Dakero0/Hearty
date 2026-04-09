@@ -153,3 +153,94 @@ button {
 }
 
 body.bilqis:not(.inverted) button { color: black; }
+
+/* =========================================
+   ✨ THEME DECORATIONS ✨
+========================================= */
+
+.decorations {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; /* Important: lets you click the heart THROUGH the decorations */
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    overflow: hidden;
+}
+
+/* Visibility Logic based on body class */
+body:not(.goth):not(.bilqis) .pinky-decorations {
+    opacity: 1; /* Shows only in default/pinky mode */
+}
+
+body.goth .goth-decorations {
+    opacity: 1; /* Shows only in goth mode */
+}
+
+/* --- 🌸 Pinky Floating Hearts --- */
+.mini-heart {
+    position: absolute;
+    background-color: #ff99bb;
+    width: 15px; height: 15px;
+    transform: rotate(-45deg);
+    animation: floatUp 8s infinite ease-in;
+    opacity: 0;
+    filter: drop-shadow(0 0 5px #ffb3c6);
+}
+.mini-heart::before, .mini-heart::after {
+    content: ""; position: absolute;
+    width: 15px; height: 15px;
+    background-color: inherit;
+    border-radius: 50%;
+}
+.mini-heart::before { top: -7.5px; left: 0; }
+.mini-heart::after { top: 0; left: 7.5px; }
+
+@keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(-45deg) scale(0.8); opacity: 0; }
+    20% { opacity: 0.4; }
+    80% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) rotate(-45deg) scale(1.2); opacity: 0; }
+}
+
+/* Randomizing the hearts positions and speeds */
+.h1 { left: 15%; animation-duration: 9s; animation-delay: 0s; }
+.h2 { left: 85%; animation-duration: 7s; animation-delay: 2s; transform: scale(0.8); }
+.h3 { left: 30%; animation-duration: 11s; animation-delay: 4s; transform: scale(1.2); }
+.h4 { left: 70%; animation-duration: 8s; animation-delay: 1s; transform: scale(0.9); }
+.h5 { left: 50%; animation-duration: 10s; animation-delay: 5s; transform: scale(0.7); }
+.h6 { left: 10%; animation-duration: 6s; animation-delay: 6s; transform: scale(1.1); }
+
+
+/* --- 🕸️ Goth Spider & Webs --- */
+.goth-decorations .web-left {
+    position: absolute; top: -10px; left: -10px;
+    width: 250px; height: 250px;
+}
+.goth-decorations .web-right {
+    position: absolute; bottom: -10px; right: -10px;
+    width: 250px; height: 250px;
+}
+
+.goth-decorations .spider-hanger {
+    position: absolute;
+    top: 0; right: 28%; /* Hangs down under the switcher area */
+    display: flex; flex-direction: column; align-items: center;
+    animation: swing 2s infinite ease-in-out alternate;
+    transform-origin: top center;
+}
+
+.goth-decorations .thread {
+    width: 1px; height: 120px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.goth-decorations .spider {
+    margin-top: -3px; /* Connects the spider to the thread */
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+@keyframes swing {
+    0% { transform: rotate(-4deg); }
+    100% { transform: rotate(4deg); }
+}
