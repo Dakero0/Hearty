@@ -190,7 +190,7 @@ function triggerFrozenSequence() {
     setTimeout(() => {
         secretMessage.style.opacity = "0"; 
         
-        frozenSong.volume = 0.4;
+        frozenSong.volume = 0.2;
         frozenSong.play().catch(e => console.log("Audio blocked", e));
         
         heart.style.animation = `heartbeat ${beatDuration}s cubic-bezier(0.17, 0.89, 0.32, 1.28) infinite`;
