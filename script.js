@@ -25,8 +25,8 @@ document.body.addEventListener('click', () => {
         windSound.volume = 0.03; 
         windSound.play().catch(e => console.log("Audio blocked"));
         
-        // Lowered heartbeat volume to 0.7 here
-        heartbeatSound.volume = 0.7; 
+        // Lowered heartbeat volume to 0.2 here
+        heartbeatSound.volume = 0.2; 
         heartbeatSound.play().catch(e => console.log("Audio blocked"));
         
         heart.style.animationDuration = `${baseAudioDuration}s`;
