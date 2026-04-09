@@ -1,0 +1,108 @@
+:root {
+    --bg-color: #ffd1dc;         
+    --heart-color: #ff6699;      
+    --glow-color: #ff99bb;       
+    --text-color: #ff6699;
+    --switch-bg: #ffb3c6;
+}
+
+body.goth {
+    --bg-color: #1a1a1a;         
+    --heart-color: #8b0000;      
+    --glow-color: #ff0000;       
+    --text-color: #8b0000;
+    --switch-bg: #444444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', Courier, monospace;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.8s ease;
+    overflow: hidden;
+    user-select: none; 
+}
+
+/* Toggle & Heart remain consistent for the vibe */
+.toggle-container { position: absolute; top: 30px; display: flex; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 2px; }
+.switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg); transition: .4s; border-radius: 34px; }
+.slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider:before { transform: translateX(26px); }
+
+.heart-container {
+    filter: drop-shadow(0 0 25px var(--glow-color));
+    animation: heartbeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.heart { position: relative; width: 100px; height: 100px; background-color: var(--heart-color); transform: rotate(-45deg); }
+.heart::before, .heart::after { content: ""; position: absolute; width: 100px; height: 100px; background-color: var(--heart-color); border-radius: 50%; }
+.heart::before { top: -50px; left: 0; }
+.heart::after { top: 0; left: 50px; }
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(0.95); }
+    5% { transform: scale(1.1); }
+    39% { transform: scale(0.85); }
+    45% { transform: scale(1); }
+}
+
+/* Messages with smoother fade */
+#secret-message {
+    position: absolute;
+    bottom: 20%;
+    font-size: 1.2rem;
+    font-style: italic;
+    text-align: center;
+    text-shadow: 0 0 10px var(--glow-color);
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Slower fade for readability */
+}
+
+/* Death Screen - Backed up and clear */
+#death-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-color);
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: all 1s ease;
+}
+
+.death-content {
+    transform: scale(0.8); /* This "backs it up" so it's not in your face */
+    text-align: center;
+    max-width: 80%;
+}
+
+#death-screen h1 {
+    font-size: 2.5rem; /* Slightly smaller to keep it aesthetic */
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+button {
+    background: var(--heart-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 50px; /* Rounder, more aesthetic */
+    font-size: 1rem;
+    transition: transform 0.2s;
+}
+
+button:hover { transform: scale(1.1); }
